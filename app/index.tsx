@@ -9,9 +9,9 @@ import {
 } from "react-native";
 
 export default function Index() {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState<string[]>([]);
   const [currentNote, setCurrentNote] = useState("");
-  const [editingIndex, setEditingIndex] = useState(null);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   const addNote = () => {
     if (currentNote.trim() === "") return;
@@ -26,12 +26,12 @@ export default function Index() {
     setCurrentNote("");
   };
 
-  const editNote = (index) => {
+  const editNote = (index: number) => {
     setCurrentNote(notes[index]);
     setEditingIndex(index);
   };
 
-  const deleteNote = (index) => {
+  const deleteNote = (index: number) => {
     const updatedNotes = notes.filter((_, i) => i !== index);
     setNotes(updatedNotes);
   };
