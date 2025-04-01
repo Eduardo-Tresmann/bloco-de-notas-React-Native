@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,22 +7,48 @@ import {
   FlatList,
   StyleSheet,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Index() {
   const [notes, setNotes] = useState<string[]>([]);
   const [currentNote, setCurrentNote] = useState("");
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
+  const loadNotes = async () => {
+    try {
+      const storedNotes = await AsyncStorage.getItem("@notes");
+      if (storedNotes) {
+        setNotes(JSON.parse(storedNotes));
+      }
+    } catch (error) {
+      console.error("Erro ao carregar notas:", error);
+    }
+  };
+
+  const saveNotes = async (notesToSave: string[]) => {
+    try {
+      await AsyncStorage.setItem("@notes", JSON.stringify(notesToSave));
+    } catch (error) {
+      console.error("Erro ao salvar notas:", error);
+    }
+  };
+
+  useEffect(() => {
+    loadNotes();
+  }, []);
+
   const addNote = () => {
     if (currentNote.trim() === "") return;
+    let updatedNotes;
     if (editingIndex !== null) {
-      const updatedNotes = [...notes];
+      updatedNotes = [...notes];
       updatedNotes[editingIndex] = currentNote;
-      setNotes(updatedNotes);
       setEditingIndex(null);
     } else {
-      setNotes([...notes, currentNote]);
+      updatedNotes = [...notes, currentNote];
     }
+    setNotes(updatedNotes);
+    saveNotes(updatedNotes);
     setCurrentNote("");
   };
 
@@ -34,6 +60,7 @@ export default function Index() {
   const deleteNote = (index: number) => {
     const updatedNotes = notes.filter((_, i) => i !== index);
     setNotes(updatedNotes);
+    saveNotes(updatedNotes);
   };
 
   return (
