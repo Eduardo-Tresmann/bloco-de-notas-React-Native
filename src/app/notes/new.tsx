@@ -1,6 +1,7 @@
 import { View, TextInput, Button, Alert } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
+import React from 'react';
 
 export default function NewNote() {
   const [text, setText] = useState('');
