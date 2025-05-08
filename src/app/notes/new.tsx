@@ -1,27 +1,125 @@
-import { View, TextInput, Button, Alert } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import React from 'react';
+import { colors } from '../../styles/colors';
 
 export default function NewNote() {
-  const [text, setText] = useState('');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [saved, setSaved] = useState(false);
   const router = useRouter();
 
   const saveNote = () => {
-    Alert.alert('Nota salva!', `Conteúdo: ${text}`);
-    router.push('../tabs/notes');
+    setSaved(true);
+    setTimeout(() => {
+      setSaved(false);
+      router.push('../tabs/notes');
+    }, 1000);
   };
 
   return (
-    <View style={{ padding: 20 }}>
-      <TextInput
-        placeholder="Digite sua nota aqui..."
-        value={text}
-        onChangeText={setText}
-        multiline
-        style={{ height: 150, borderColor: '#ccc', borderWidth: 1, marginBottom: 10, padding: 10 }}
-      />
-      <Button title="Salvar Nota" onPress={saveNote} />
-    </View>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      keyboardVerticalOffset={24}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
+        <View style={styles.card}>
+          <TextInput
+            placeholder="Título"
+            placeholderTextColor={colors.gray[400]}
+            value={title}
+            onChangeText={setTitle}
+            style={styles.titleInput}
+          />
+          <TextInput
+            placeholder="Digite o conteúdo da nota..."
+            placeholderTextColor={colors.gray[400]}
+            value={content}
+            onChangeText={setContent}
+            multiline
+            style={styles.contentInput}
+          />
+          <TouchableOpacity style={styles.saveButton} onPress={saveNote}>
+            <Text style={styles.saveButtonText}>Salvar Nota</Text>
+          </TouchableOpacity>
+          {saved && (
+            <Text style={styles.savedText}>Nota salva!</Text>
+          )}
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.gray[900],
+    padding: 0,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  card: {
+    flex: 1,
+    width: '100%',
+    backgroundColor: colors.gray[800],
+    borderRadius: 0,
+    padding: 24,
+    shadowColor: colors.black,
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 3,
+    minHeight: '100%',
+    justifyContent: 'flex-start',
+  },
+  titleInput: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: colors.white,
+    backgroundColor: colors.gray[700],
+    borderRadius: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    marginBottom: 18,
+    borderWidth: 0,
+  },
+  contentInput: {
+    minHeight: 120,
+    fontSize: 16,
+    color: colors.white,
+    backgroundColor: colors.gray[600],
+    borderRadius: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    marginBottom: 24,
+    borderWidth: 0,
+    textAlignVertical: 'top',
+  },
+  saveButton: {
+    backgroundColor: colors.blue[400],
+    borderRadius: 10,
+    paddingVertical: 14,
+    alignItems: 'center',
+    shadowColor: colors.black,
+    shadowOpacity: 0.10,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  saveButtonText: {
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: '700',
+    letterSpacing: 0.5,
+  },
+  savedText: {
+    color: colors.green[400],
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginTop: 16,
+  },
+});
