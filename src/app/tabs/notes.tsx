@@ -97,7 +97,6 @@ export default function NotesPage() {
           </Link>
         ))}
       </ScrollView>
-
       <Modal
         visible={showModal}
         transparent
@@ -130,7 +129,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.gray[800],
     paddingHorizontal: 16,
-    paddingTop: 20,
   },
   header: {
     fontSize: 28,
@@ -262,3 +260,4 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
 });
+

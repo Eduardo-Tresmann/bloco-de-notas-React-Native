@@ -35,3 +35,4 @@ export async function removeNote(id: string): Promise<void> {
   const filtered = notes.filter(n => n.id !== id);
   await AsyncStorage.setItem(NOTES_KEY, JSON.stringify(filtered));
 }
+

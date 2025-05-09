@@ -32,7 +32,7 @@ export default function NewNote() {
       setSaved(false);
       setShowModal(false);
       router.push('../tabs/notes');
-    }, 1500); // aumente o tempo para 2.2 segundos
+    }, 1500);
   };
 
   return (
@@ -182,3 +182,4 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
 });
+
