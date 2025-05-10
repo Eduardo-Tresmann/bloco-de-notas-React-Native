@@ -1,10 +1,11 @@
 import { Link } from 'expo-router';
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, RefreshControl, Animated, Modal } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, RefreshControl, Animated, Modal, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../../styles/colors';
+import { colors } from '@/styles/colors';
 import { getNotes, Note, removeNote } from '../../utils/notes-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import Button from '@/components/Button';
 
 export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -57,11 +58,14 @@ export default function NotesPage() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Minhas Notas</Text>
+      <Text style={styles.header}>📝 Minhas Notas</Text>
       <Link href="../notes/new" asChild>
-        <TouchableOpacity style={styles.newNoteButton}>
-          <Text style={styles.newNoteButtonText}>+ Criar Nova Nota</Text>
-        </TouchableOpacity>
+        <Button
+          title="+ Criar Nova Nota"
+          color={colors.blue[400]}
+          style={styles.newNoteButton}
+          onPress={() => {}}
+        />
       </Link>
       <ScrollView
         style={styles.notesList}
@@ -110,12 +114,18 @@ export default function NotesPage() {
             <Text style={styles.modalText}>Tem certeza que deseja excluir esta nota?</Text>
             <Text style={styles.modalWarn}>Esta ação não poderá ser desfeita.</Text>
             <View style={styles.modalActions}>
-              <TouchableOpacity style={styles.modalCancel} onPress={cancelDelete}>
-                <Text style={styles.modalCancelText}>Cancelar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.modalDelete} onPress={confirmDelete}>
-                <Text style={styles.modalDeleteText}>Excluir</Text>
-              </TouchableOpacity>
+              <Button
+                title="Cancelar"
+                color={colors.gray[700]}
+                style={styles.modalCancel}
+                onPress={cancelDelete}
+              />
+              <Button
+                title="Excluir"
+                color={colors.red[600]}
+                style={styles.modalDelete}
+                onPress={confirmDelete}
+              />
             </View>
           </View>
         </View>
@@ -129,6 +139,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.gray[800],
     paddingHorizontal: 16,
+    padding: 20,
   },
   header: {
     fontSize: 28,
@@ -199,7 +210,7 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(10,10,10,0.85)',
+    backgroundColor: colors.black,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -258,6 +269,5 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontWeight: '700',
     fontSize: 15,
-  },
+  }
 });
-

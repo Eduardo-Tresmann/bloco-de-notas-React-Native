@@ -1,16 +1,36 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { colors } from '../../styles/colors';
+import { View, Text, TextInput, StyleSheet, Animated, Pressable } from 'react-native';
+import { colors } from '@/styles/colors';
 import { useRouter } from 'expo-router';
+import Button from '@/components/Button';
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [scaleAnim] = useState(new Animated.Value(1));
   const router = useRouter();
 
   function handleLogin() {
     router.replace('/tabs/notes');
   }
+
+  const handlePressIn = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 0.96,
+      useNativeDriver: true,
+      speed: 50,
+      bounciness: 10,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+      speed: 50,
+      bounciness: 10,
+    }).start();
+  };
 
   return (
     <View style={styles.container}>
@@ -31,12 +51,21 @@ export default function LoginScreen() {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Entrar</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.push('/auth/register')}>
-        <Text style={styles.switchText}>Não tem conta? Registre-se</Text>
-      </TouchableOpacity>
+      <Button
+        title="Entrar"
+        color={colors.blue[400]}
+        style={styles.button}
+        onPress={handleLogin}
+      />
+      <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+        <Pressable
+          onPressIn={handlePressIn}
+          onPressOut={handlePressOut}
+          onPress={() => router.push('/auth/register')}
+        >
+          <Text style={styles.switchText}>Não tem conta? Registre-se</Text>
+        </Pressable>
+      </Animated.View>
     </View>
   );
 }

@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { colors } from '../../styles/colors';
+import { View, Text, StyleSheet } from 'react-native';
+import { colors } from '@/styles/colors';
 import { useRouter } from 'expo-router';
+import Button from '@/components/Button';
 
 export default function Settings() {
   const router = useRouter();
@@ -14,9 +15,12 @@ export default function Settings() {
     <View style={styles.container}>
       <Text style={styles.header}>⚙️ Configurações</Text>
       <View style={{ flex: 1 }} />
-      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.logoutButtonText}>Sair da Conta</Text>
-      </TouchableOpacity>
+      <Button
+        title="Sair da Conta"
+        color={colors.red[400]}
+        style={styles.logoutButton}
+        onPress={handleLogout}
+      />
     </View>
   );
 }
@@ -30,7 +34,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   header: {
-    fontSize: 24,
+    fontSize: 28,
     color: colors.white,
     fontWeight: '700',
     marginBottom: 10,
@@ -42,16 +46,10 @@ const styles = StyleSheet.create({
   },
   logoutButton: {
     marginTop: 32,
-    backgroundColor: colors.red[400],
     borderRadius: 8,
     paddingVertical: 12,
     paddingHorizontal: 32,
     alignItems: 'center',
-  },
-  logoutButtonText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 });
 

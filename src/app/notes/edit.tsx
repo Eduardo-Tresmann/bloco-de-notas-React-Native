@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, ActivityIndicator, Modal } from 'react-native';
-import { colors } from '../../styles/colors';
+import { View, TextInput, Text, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, ActivityIndicator, Modal } from 'react-native';
+import { colors } from '@/styles/colors';
 import { getNote, saveNote, Note } from '../../utils/notes-storage';
 import { Ionicons } from '@expo/vector-icons';
+import Button from '@/components/Button';
 
 export default function NoteDetail() {
   const { id } = useLocalSearchParams();
@@ -76,9 +77,12 @@ export default function NoteDetail() {
               multiline
               style={styles.contentInput}
             />
-            <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-              <Text style={styles.saveButtonText}>Salvar Nota</Text>
-            </TouchableOpacity>
+            <Button
+              title="Salvar Nota"
+              color={colors.blue[400]}
+              style={styles.saveButton}
+              onPress={handleSave}
+            />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -164,7 +168,7 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(10,10,10,0.85)',
+    backgroundColor: colors.black,
     justifyContent: 'center',
     alignItems: 'center',
   },

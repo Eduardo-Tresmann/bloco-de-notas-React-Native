@@ -1,13 +1,33 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { colors } from '../../styles/colors';
+import { View, Text, TextInput, StyleSheet, Animated, Pressable } from 'react-native';
+import { colors } from '@/styles/colors';
 import { useRouter } from 'expo-router';
+import Button from '@/components/Button';
 
 export default function RegisterScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [scaleAnim] = useState(new Animated.Value(1));
   const router = useRouter();
+
+  const handlePressIn = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 0.96,
+      useNativeDriver: true,
+      speed: 50,
+      bounciness: 10,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+      speed: 50,
+      bounciness: 10,
+    }).start();
+  };
 
   function handleRegister() {
     router.replace('/auth/login');
@@ -40,12 +60,21 @@ export default function RegisterScreen() {
         onChangeText={setConfirmPassword}
         secureTextEntry
       />
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Registrar</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => router.replace('/auth/login')}>
-        <Text style={styles.switchText}>Já tem conta? Faça login</Text>
-      </TouchableOpacity>
+      <Button
+        title="Registrar"
+        color={colors.blue[400]}
+        style={styles.button}
+        onPress={handleRegister}
+      />
+      <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+        <Pressable
+          onPressIn={handlePressIn}
+          onPressOut={handlePressOut}
+          onPress={() => router.replace('/auth/login')}
+        >
+          <Text style={styles.switchText}>Já tem conta? Faça login</Text>
+        </Pressable>
+      </Animated.View>
     </View>
   );
 }

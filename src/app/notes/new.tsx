@@ -1,10 +1,11 @@
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Modal } from 'react-native';
+import { View, TextInput, Text, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Modal } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { colors } from '../../styles/colors';
+import { colors } from '@/styles/colors';
 import { saveNote, Note } from '../../utils/notes-storage';
 import { Ionicons } from '@expo/vector-icons';
+import Button from '@/components/Button';
 
 function uuid() {
   return Math.random().toString(36).substring(2, 12) + Date.now().toString(36);
@@ -59,9 +60,12 @@ export default function NewNote() {
               multiline
               style={styles.contentInput}
             />
-            <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-              <Text style={styles.saveButtonText}>Salvar Nota</Text>
-            </TouchableOpacity>
+            <Button
+              title="Salvar Nota"
+              color={colors.blue[400]}
+              style={styles.saveButton}
+              onPress={handleSave}
+            />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -154,7 +158,7 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(10,10,10,0.85)',
+    backgroundColor: colors.black,
     justifyContent: 'center',
     alignItems: 'center',
   },
