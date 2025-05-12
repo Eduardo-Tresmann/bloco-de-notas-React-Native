@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { View, Text, StyleSheet, ActivityIndicator, Modal } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { colors } from '@/styles/colors';
 import { getNote, saveNote, Note } from '../../utils/notes-storage';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '@/components/Button';
 import InputField from '@/components/InputField';
 import PageContainer from '@/components/PageContainer';
+import ModalMessage from '@/components/ModalMessage';
 
 export default function NoteDetail() {
   const { id } = useLocalSearchParams();
@@ -80,20 +81,14 @@ export default function NoteDetail() {
           />
         </View>
       </PageContainer>
-      <Modal
+      <ModalMessage
         visible={showModal}
-        transparent
-        animationType="fade"
+        icon="checkmark-circle-outline"
+        iconColor={colors.green[400]}
+        title="Nota salva!"
+        message="Sua nota foi salva com sucesso."
         onRequestClose={() => setShowModal(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Ionicons name="checkmark-circle-outline" size={40} color={colors.green[400]} style={{ marginBottom: 12 }} />
-            <Text style={styles.modalTitle}>Nota salva!</Text>
-            <Text style={styles.modalText}>Sua nota foi salva com sucesso.</Text>
-          </View>
-        </View>
-      </Modal>
+      />
     </>
   );
 }

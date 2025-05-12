@@ -1,6 +1,6 @@
 import { Link } from 'expo-router';
 import React, { useEffect, useState, useCallback } from 'react';
-import { Text, StyleSheet, RefreshControl, Animated, Modal, TouchableOpacity, ScrollView, View } from 'react-native';
+import { Text, StyleSheet, RefreshControl, Animated, TouchableOpacity, ScrollView, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '@/styles/colors';
 import { getNotes, Note, removeNote } from '../../utils/notes-storage';
@@ -8,6 +8,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import Button from '@/components/Button';
 import PageContainer from '@/components/PageContainer';
 import NoteCard from '@/components/NoteCard';
+import ModalMessage from '@/components/ModalMessage';
 
 export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -93,35 +94,31 @@ export default function NotesPage() {
           </Link>
         ))}
       </ScrollView>
-      <Modal
+      <ModalMessage
         visible={showModal}
-        transparent
-        animationType="fade"
+        icon="trash-outline"
+        iconColor={colors.red[400]}
+        title="Excluir Nota"
+        message="Tem certeza que deseja excluir esta nota?"
+        warn="Esta ação não poderá ser desfeita."
         onRequestClose={cancelDelete}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Ionicons name="trash-outline" size={36} color={colors.red[400]} style={{ marginBottom: 12 }} />
-            <Text style={styles.modalTitle}>Excluir Nota</Text>
-            <Text style={styles.modalText}>Tem certeza que deseja excluir esta nota?</Text>
-            <Text style={styles.modalWarn}>Esta ação não poderá ser desfeita.</Text>
-            <View style={styles.modalActionsFixed}>
-              <Button
-                title="Cancelar"
-                color={colors.gray[700]}
-                style={styles.modalCancel}
-                onPress={cancelDelete}
-              />
-              <Button
-                title="Excluir"
-                color={colors.red[600]}
-                style={styles.modalDelete}
-                onPress={confirmDelete}
-              />
-            </View>
-          </View>
-        </View>
-      </Modal>
+        actions={
+          <>
+            <Button
+              title="Cancelar"
+              color={colors.gray[700]}
+              style={styles.modalCancel}
+              onPress={cancelDelete}
+            />
+            <Button
+              title="Excluir"
+              color={colors.red[600]}
+              style={styles.modalDelete}
+              onPress={confirmDelete}
+            />
+          </>
+        }
+      />
     </PageContainer>
   );
 }
