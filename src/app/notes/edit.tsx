@@ -88,8 +88,9 @@ export default function NoteDetail() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'flex-start',
     backgroundColor: colors.gray[900],
-    padding: 0,
+    padding: 20,
   },
   titleInput: {
     fontSize: 22,
