@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { colors } from '@/styles/colors';
 import { useRouter } from 'expo-router';
 import Button from '@/components/Button';
+import PageContainer from '@/components/PageContainer';
 
 export default function Settings() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function Settings() {
   }
 
   return (
-    <View style={styles.container}>
+    <PageContainer style={styles.container}>
       <Text style={styles.header}>⚙️ Configurações</Text>
       <View style={{ flex: 1 }} />
       <Button
@@ -21,7 +22,7 @@ export default function Settings() {
         style={styles.logoutButton}
         onPress={handleLogout}
       />
-    </View>
+    </PageContainer>
   );
 }
 

@@ -1,11 +1,12 @@
 import { Link } from 'expo-router';
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, RefreshControl, Animated, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, RefreshControl, Animated, Modal, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '@/styles/colors';
 import { getNotes, Note, removeNote } from '../../utils/notes-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import Button from '@/components/Button';
+import PageContainer from '@/components/PageContainer';
 
 export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -57,7 +58,10 @@ export default function NotesPage() {
   };
 
   return (
-    <View style={styles.container}>
+    <PageContainer
+      style={{ backgroundColor: colors.gray[800], paddingHorizontal: 16, padding: 20, paddingBottom: 20 }}
+      scrollable={false}
+    >
       <Text style={styles.header}>📝 Minhas Notas</Text>
       <Link href="../notes/new" asChild>
         <Button
@@ -113,7 +117,7 @@ export default function NotesPage() {
             <Text style={styles.modalTitle}>Excluir Nota</Text>
             <Text style={styles.modalText}>Tem certeza que deseja excluir esta nota?</Text>
             <Text style={styles.modalWarn}>Esta ação não poderá ser desfeita.</Text>
-            <View style={styles.modalActions}>
+            <View style={styles.modalActionsFixed}>
               <Button
                 title="Cancelar"
                 color={colors.gray[700]}
@@ -130,7 +134,7 @@ export default function NotesPage() {
           </View>
         </View>
       </Modal>
-    </View>
+    </PageContainer>
   );
 }
 
@@ -243,16 +247,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 18,
   },
-  modalActions: {
+  modalActionsFixed: {
     flexDirection: 'row',
-    gap: 16,
   },
   modalCancel: {
     backgroundColor: colors.gray[700],
     borderRadius: 8,
     paddingVertical: 10,
     paddingHorizontal: 22,
-    marginRight: 8,
+    marginRight: 16,
   },
   modalCancelText: {
     color: colors.white,

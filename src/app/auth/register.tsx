@@ -4,6 +4,7 @@ import { colors } from '@/styles/colors';
 import { useRouter } from 'expo-router';
 import Button from '@/components/Button';
 import InputField from '@/components/InputField';
+import PageContainer from '@/components/PageContainer';
 
 export default function RegisterScreen() {
   const [username, setUsername] = useState('');
@@ -35,7 +36,7 @@ export default function RegisterScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <PageContainer style={styles.container}>
       <Text style={styles.title}>Registrar</Text>
       <InputField
         style={styles.input}
@@ -73,7 +74,7 @@ export default function RegisterScreen() {
           <Text style={styles.switchText}>Já tem conta? Faça login</Text>
         </Pressable>
       </Animated.View>
-    </View>
+    </PageContainer>
   );
 }
 

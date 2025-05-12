@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Animated, Pressable } from 'react-native';
+import { Text, StyleSheet, Animated, Pressable } from 'react-native';
 import { colors } from '@/styles/colors';
 import { useRouter } from 'expo-router';
 import Button from '@/components/Button';
 import InputField from '@/components/InputField';
+import PageContainer from '@/components/PageContainer';
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
@@ -34,7 +35,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <PageContainer style={styles.container}>
       <Text style={styles.title}>Login</Text>
       <InputField
         style={styles.input}
@@ -65,7 +66,7 @@ export default function LoginScreen() {
           <Text style={styles.switchText}>Não tem conta? Registre-se</Text>
         </Pressable>
       </Animated.View>
-    </View>
+    </PageContainer>
   );
 }
 

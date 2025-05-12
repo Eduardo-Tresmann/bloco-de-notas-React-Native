@@ -1,4 +1,4 @@
-import { View, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Modal, Text } from 'react-native';
+import { View, StyleSheet, Modal, Text } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -7,6 +7,7 @@ import { saveNote, Note } from '../../utils/notes-storage';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '@/components/Button';
 import InputField from '@/components/InputField';
+import PageContainer from '@/components/PageContainer';
 
 function uuid() {
   return Math.random().toString(36).substring(2, 12) + Date.now().toString(36);
@@ -39,35 +40,29 @@ export default function NewNote() {
 
   return (
     <>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={24}
-      >
-        <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
-          <View style={styles.card}>
-            <InputField
-              placeholder="Título"
-              value={title}
-              onChangeText={setTitle}
-              style={styles.titleInput}
-            />
-            <InputField
-              placeholder="Digite o conteúdo da nota..."
-              value={content}
-              onChangeText={setContent}
-              multiline
-              style={styles.contentInput}
-            />
-            <Button
-              title="Salvar Nota"
-              color={colors.blue[400]}
-              style={styles.saveButton}
-              onPress={handleSave}
-            />
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+      <PageContainer scrollable style={styles.container}>
+        <View style={styles.card}>
+          <InputField
+            placeholder="Título"
+            value={title}
+            onChangeText={setTitle}
+            style={styles.titleInput}
+          />
+          <InputField
+            placeholder="Digite o conteúdo da nota..."
+            value={content}
+            onChangeText={setContent}
+            multiline
+            style={styles.contentInput}
+          />
+          <Button
+            title="Salvar Nota"
+            color={colors.blue[400]}
+            style={styles.saveButton}
+            onPress={handleSave}
+          />
+        </View>
+      </PageContainer>
       <Modal
         visible={showModal}
         transparent
