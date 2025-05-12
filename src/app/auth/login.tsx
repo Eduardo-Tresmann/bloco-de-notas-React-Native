@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Animated, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Animated, Pressable } from 'react-native';
 import { colors } from '@/styles/colors';
 import { useRouter } from 'expo-router';
 import Button from '@/components/Button';
+import InputField from '@/components/InputField';
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
@@ -35,18 +36,16 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      <TextInput
+      <InputField
         style={styles.input}
         placeholder="Usuário"
-        placeholderTextColor={colors.gray[400]}
         value={username}
         onChangeText={setUsername}
         autoCapitalize="none"
       />
-      <TextInput
+      <InputField
         style={styles.input}
         placeholder="Senha"
-        placeholderTextColor={colors.gray[400]}
         value={password}
         onChangeText={setPassword}
         secureTextEntry

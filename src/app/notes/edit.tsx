@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { View, TextInput, Text, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, ActivityIndicator, Modal } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, ActivityIndicator, Modal } from 'react-native';
 import { colors } from '@/styles/colors';
 import { getNote, saveNote, Note } from '../../utils/notes-storage';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '@/components/Button';
+import InputField from '@/components/InputField';
 
 export default function NoteDetail() {
   const { id } = useLocalSearchParams();
@@ -62,16 +63,14 @@ export default function NoteDetail() {
       >
         <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
           <View style={styles.card}>
-            <TextInput
+            <InputField
               placeholder="Título"
-              placeholderTextColor={colors.gray[400]}
               value={title}
               onChangeText={setTitle}
               style={styles.titleInput}
             />
-            <TextInput
+            <InputField
               placeholder="Digite o conteúdo da nota..."
-              placeholderTextColor={colors.gray[400]}
               value={content}
               onChangeText={setContent}
               multiline
