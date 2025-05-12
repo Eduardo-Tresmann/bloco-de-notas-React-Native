@@ -7,6 +7,7 @@ import { getNotes, Note, removeNote } from '../../utils/notes-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import Button from '@/components/Button';
 import PageContainer from '@/components/PageContainer';
+import NoteCard from '@/components/NoteCard';
 
 export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -81,27 +82,14 @@ export default function NotesPage() {
         )}
         {notes.map(note => (
           <Link key={note.id} href={{ pathname: '../notes/edit', params: { id: note.id } }} asChild>
-            <TouchableOpacity style={styles.noteCard}>
-              <TouchableOpacity
-                style={styles.trashButton}
-                onPress={e => {
-                  e.stopPropagation();
-                  handleDelete(note.id);
-                }}
-                accessibilityLabel="Excluir nota"
-                activeOpacity={0.7}
-              >
-                <Animated.View style={{ transform: [{ scale: iconAnim[note.id] || 1 }] }}>
-                  <Ionicons
-                    name="trash-outline"
-                    size={22}
-                    color={deletingId === note.id ? colors.red[400] : colors.gray[300]}
-                  />
-                </Animated.View>
-              </TouchableOpacity>
-              <Text style={styles.noteTitle}>{note.title}</Text>
-              <Text style={styles.notePreview} numberOfLines={2}>{note.content}</Text>
-            </TouchableOpacity>
+            <NoteCard
+              title={note.title}
+              content={note.content}
+              onPress={() => {}}
+              onDelete={() => handleDelete(note.id)}
+              deleting={deletingId === note.id}
+              animValue={iconAnim[note.id]}
+            />
           </Link>
         ))}
       </ScrollView>
