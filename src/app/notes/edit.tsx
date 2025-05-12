@@ -57,7 +57,7 @@ export default function NoteDetail() {
 
   return (
     <>
-      <PageContainer scrollable style={styles.container}>
+      <PageContainer style={styles.container} scrollable>
         <View style={styles.card}>
           <InputField
             placeholder="Título"
@@ -104,10 +104,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray[900],
     padding: 0,
   },
-  scrollContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
   card: {
     flex: 1,
     width: '100%',
@@ -153,12 +149,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.10,
     shadowRadius: 4,
     elevation: 2,
-  },
-  saveButtonText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: '700',
-    letterSpacing: 0.5,
   },
   modalOverlay: {
     flex: 1,

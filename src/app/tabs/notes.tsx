@@ -1,6 +1,6 @@
 import { Link } from 'expo-router';
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, StyleSheet, RefreshControl, Animated, Modal, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, StyleSheet, RefreshControl, Animated, Modal, TouchableOpacity, ScrollView, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '@/styles/colors';
 import { getNotes, Note, removeNote } from '../../utils/notes-storage';

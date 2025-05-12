@@ -1,7 +1,7 @@
+import React from 'react';
 import { View, StyleSheet, Modal, Text } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
-import React from 'react';
 import { colors } from '@/styles/colors';
 import { saveNote, Note } from '../../utils/notes-storage';
 import { Ionicons } from '@expo/vector-icons';
@@ -16,7 +16,6 @@ function uuid() {
 export default function NewNote() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [saved, setSaved] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
@@ -29,10 +28,8 @@ export default function NewNote() {
       createdAt: Date.now(),
     };
     await saveNote(note);
-    setSaved(true);
     setShowModal(true);
     setTimeout(() => {
-      setSaved(false);
       setShowModal(false);
       router.push('../tabs/notes');
     }, 1500);
@@ -40,7 +37,7 @@ export default function NewNote() {
 
   return (
     <>
-      <PageContainer scrollable style={styles.container}>
+      <PageContainer style={styles.container} scrollable>
         <View style={styles.card}>
           <InputField
             placeholder="Título"
@@ -87,10 +84,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray[900],
     padding: 0,
   },
-  scrollContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
   card: {
     flex: 1,
     width: '100%',
@@ -136,19 +129,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.10,
     shadowRadius: 4,
     elevation: 2,
-  },
-  saveButtonText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: '700',
-    letterSpacing: 0.5,
-  },
-  savedText: {
-    color: colors.green[400],
-    fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
-    marginTop: 16,
   },
   modalOverlay: {
     flex: 1,

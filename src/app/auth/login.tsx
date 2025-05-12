@@ -1,38 +1,20 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, Animated, Pressable } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { colors } from '@/styles/colors';
 import { useRouter } from 'expo-router';
 import Button from '@/components/Button';
 import InputField from '@/components/InputField';
 import PageContainer from '@/components/PageContainer';
+import AuthSwitchLink from '@/components/AuthSwitchLink';
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [scaleAnim] = useState(new Animated.Value(1));
   const router = useRouter();
 
   function handleLogin() {
     router.replace('/tabs/notes');
   }
-
-  const handlePressIn = () => {
-    Animated.spring(scaleAnim, {
-      toValue: 0.96,
-      useNativeDriver: true,
-      speed: 50,
-      bounciness: 10,
-    }).start();
-  };
-
-  const handlePressOut = () => {
-    Animated.spring(scaleAnim, {
-      toValue: 1,
-      useNativeDriver: true,
-      speed: 50,
-      bounciness: 10,
-    }).start();
-  };
 
   return (
     <PageContainer style={styles.container}>
@@ -57,15 +39,9 @@ export default function LoginScreen() {
         style={styles.button}
         onPress={handleLogin}
       />
-      <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-        <Pressable
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-          onPress={() => router.push('/auth/register')}
-        >
-          <Text style={styles.switchText}>Não tem conta? Registre-se</Text>
-        </Pressable>
-      </Animated.View>
+      <AuthSwitchLink onPress={() => router.push('/auth/register')}>
+        Não tem conta? Registre-se
+      </AuthSwitchLink>
     </PageContainer>
   );
 }
