@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet } from 'react-native';
-import { colors } from '@/styles/colors';
+import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { colors } from '@/styles/colors';
 import Button from '@/components/Button';
 import InputField from '@/components/InputField';
 import PageContainer from '@/components/PageContainer';
 import AuthSwitchLink from '@/components/AuthSwitchLink';
+import Header from '@/components/Header';
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
@@ -18,7 +19,7 @@ export default function LoginScreen() {
 
   return (
     <PageContainer style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Header>Login</Header>
       <InputField
         style={styles.input}
         placeholder="Usuário"
@@ -54,12 +55,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray[800],
     padding: 24,
   },
-  title: {
-    fontSize: 28,
-    color: colors.white,
-    marginBottom: 32,
-    fontWeight: 'bold',
-  },
   input: {
     width: '100%',
     maxWidth: 320,
@@ -76,15 +71,5 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 32,
     marginBottom: 16,
-  },
-  buttonText: {
-    color: colors.white,
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  switchText: {
-    color: colors.gray[300],
-    fontSize: 16,
-    marginTop: 8,
   },
 });

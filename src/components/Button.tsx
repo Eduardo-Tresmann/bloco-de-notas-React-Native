@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { TouchableOpacity, Text, StyleSheet, TouchableOpacityProps, Animated } from 'react-native';
+import { Animated, StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { colors } from '@/styles/colors';
 
 interface ButtonProps extends TouchableOpacityProps {

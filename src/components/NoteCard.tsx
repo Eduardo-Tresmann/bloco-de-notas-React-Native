@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, StyleSheet, Animated, View } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '@/styles/colors';
 
@@ -12,31 +12,29 @@ interface NoteCardProps {
   animValue?: Animated.Value;
 }
 
-const NoteCard: React.FC<NoteCardProps> = ({ title, content, onPress, onDelete, deleting, animValue }) => {
-  return (
-    <TouchableOpacity style={styles.noteCard} onPress={onPress} activeOpacity={0.85}>
-      <TouchableOpacity
-        style={styles.trashButton}
-        onPress={e => {
-          e.stopPropagation();
-          onDelete && onDelete();
-        }}
-        accessibilityLabel="Excluir nota"
-        activeOpacity={0.7}
-      >
-        <Animated.View style={{ transform: [{ scale: animValue || 1 }] }}>
-          <Ionicons
-            name="trash-outline"
-            size={22}
-            color={deleting ? colors.red[400] : colors.gray[300]}
-          />
-        </Animated.View>
-      </TouchableOpacity>
-      <Text style={styles.noteTitle}>{title}</Text>
-      <Text style={styles.notePreview} numberOfLines={2}>{content}</Text>
+const NoteCard: React.FC<NoteCardProps> = ({ title, content, onPress, onDelete, deleting, animValue }) => (
+  <TouchableOpacity style={styles.noteCard} onPress={onPress} activeOpacity={0.85}>
+    <TouchableOpacity
+      style={styles.trashButton}
+      onPress={e => {
+        e.stopPropagation();
+        onDelete && onDelete();
+      }}
+      accessibilityLabel="Excluir nota"
+      activeOpacity={0.7}
+    >
+      <Animated.View style={{ transform: [{ scale: animValue || 1 }] }}>
+        <Ionicons
+          name="trash-outline"
+          size={22}
+          color={deleting ? colors.red[400] : colors.gray[300]}
+        />
+      </Animated.View>
     </TouchableOpacity>
-  );
-};
+    <Text style={styles.noteTitle}>{title}</Text>
+    <Text style={styles.notePreview} numberOfLines={2}>{content}</Text>
+  </TouchableOpacity>
+);
 
 const styles = StyleSheet.create({
   noteCard: {

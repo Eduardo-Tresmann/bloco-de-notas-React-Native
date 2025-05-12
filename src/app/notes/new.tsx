@@ -1,14 +1,13 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { colors } from '@/styles/colors';
-import { saveNote, Note } from '../../utils/notes-storage';
-import { Ionicons } from '@expo/vector-icons';
+import { saveNote } from '../../utils/notes-storage';
 import Button from '@/components/Button';
 import InputField from '@/components/InputField';
 import PageContainer from '@/components/PageContainer';
 import ModalMessage from '@/components/ModalMessage';
+import Header from '@/components/Header';
 
 function uuid() {
   return Math.random().toString(36).substring(2, 12) + Date.now().toString(36);
@@ -22,7 +21,7 @@ export default function NewNote() {
 
   const handleSave = async () => {
     if (!title.trim() && !content.trim()) return;
-    const note: Note = {
+    const note = {
       id: uuid(),
       title: title.trim() || 'Sem título',
       content: content.trim(),
@@ -39,27 +38,26 @@ export default function NewNote() {
   return (
     <>
       <PageContainer style={styles.container} scrollable>
-        <View style={styles.card}>
-          <InputField
-            placeholder="Título"
-            value={title}
-            onChangeText={setTitle}
-            style={styles.titleInput}
-          />
-          <InputField
-            placeholder="Digite o conteúdo da nota..."
-            value={content}
-            onChangeText={setContent}
-            multiline
-            style={styles.contentInput}
-          />
-          <Button
-            title="Salvar Nota"
-            color={colors.blue[400]}
-            style={styles.saveButton}
-            onPress={handleSave}
-          />
-        </View>
+        <Header>Nova Nota</Header>
+        <InputField
+          placeholder="Título"
+          value={title}
+          onChangeText={setTitle}
+          style={styles.titleInput}
+        />
+        <InputField
+          placeholder="Digite o conteúdo da nota..."
+          value={content}
+          onChangeText={setContent}
+          multiline
+          style={styles.contentInput}
+        />
+        <Button
+          title="Salvar Nota"
+          color={colors.blue[400]}
+          style={styles.saveButton}
+          onPress={handleSave}
+        />
       </PageContainer>
       <ModalMessage
         visible={showModal}
@@ -78,19 +76,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.gray[900],
     padding: 0,
-  },
-  card: {
-    flex: 1,
-    width: '100%',
-    backgroundColor: colors.gray[800],
-    borderRadius: 0,
-    padding: 24,
-    shadowColor: colors.black,
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
-    minHeight: '100%',
-    justifyContent: 'flex-start',
   },
   titleInput: {
     fontSize: 22,
@@ -124,35 +109,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.10,
     shadowRadius: 4,
     elevation: 2,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: colors.black,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    backgroundColor: colors.gray[800],
-    borderRadius: 18,
-    padding: 28,
-    alignItems: 'center',
-    width: 320,
-    shadowColor: colors.black,
-    shadowOpacity: 0.25,
-    shadowRadius: 16,
-    elevation: 8,
-  },
-  modalTitle: {
-    color: colors.white,
-    fontSize: 20,
-    fontWeight: '700',
-    marginBottom: 8,
-  },
-  modalText: {
-    color: colors.gray[100],
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 6,
   },
 });
 

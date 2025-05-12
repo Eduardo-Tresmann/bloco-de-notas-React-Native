@@ -1,14 +1,14 @@
+import React, { useState, useCallback } from 'react';
+import { StyleSheet, RefreshControl, Animated, ScrollView, Text } from 'react-native';
 import { Link } from 'expo-router';
-import React, { useEffect, useState, useCallback } from 'react';
-import { Text, StyleSheet, RefreshControl, Animated, TouchableOpacity, ScrollView, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { colors } from '@/styles/colors';
-import { getNotes, Note, removeNote } from '../../utils/notes-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import { colors } from '@/styles/colors';
+import { getNotes, Note, removeNote } from '@/utils/notes-storage';
 import Button from '@/components/Button';
 import PageContainer from '@/components/PageContainer';
 import NoteCard from '@/components/NoteCard';
 import ModalMessage from '@/components/ModalMessage';
+import Header from '@/components/Header';
 
 export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -64,7 +64,7 @@ export default function NotesPage() {
       style={{ backgroundColor: colors.gray[800], paddingHorizontal: 16, padding: 20, paddingBottom: 20 }}
       scrollable={false}
     >
-      <Text style={styles.header}>📝 Minhas Notas</Text>
+      <Header>📝 Minhas Notas</Header>
       <Link href="../notes/new" asChild>
         <Button
           title="+ Criar Nova Nota"

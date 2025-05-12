@@ -1,6 +1,6 @@
+import React from 'react';
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
 import { colors } from '../../styles/colors';
 
 export default function TabsLayout() {
@@ -8,7 +8,8 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
-          let iconName: 'document-text-outline' | 'settings-outline' = route.name === 'notes' ? 'document-text-outline' : 'settings-outline';
+          let iconName: 'document-text-outline' | 'settings-outline' =
+            route.name === 'notes' ? 'document-text-outline' : 'settings-outline';
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: colors.white,

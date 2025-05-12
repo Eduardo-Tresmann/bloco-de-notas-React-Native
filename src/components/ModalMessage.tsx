@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, View, Text, StyleSheet } from 'react-native';
-import { colors } from '@/styles/colors';
 import { Ionicons } from '@expo/vector-icons';
+import { colors } from '@/styles/colors';
 
 interface ModalMessageProps {
   visible: boolean;

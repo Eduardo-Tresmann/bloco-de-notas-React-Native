@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { colors } from '@/styles/colors';
+import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { colors } from '@/styles/colors';
 import Button from '@/components/Button';
 import PageContainer from '@/components/PageContainer';
+import Header from '@/components/Header';
 
 export default function Settings() {
   const router = useRouter();
@@ -14,8 +15,7 @@ export default function Settings() {
 
   return (
     <PageContainer style={styles.container}>
-      <Text style={styles.header}>⚙️ Configurações</Text>
-      <View style={{ flex: 1 }} />
+      <Header>⚙️ Configurações</Header>
       <Button
         title="Sair da Conta"
         color={colors.red[400]}
@@ -30,20 +30,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     backgroundColor: colors.gray[800],
     padding: 20,
-  },
-  header: {
-    fontSize: 28,
-    color: colors.white,
-    fontWeight: '700',
-    marginBottom: 10,
-  },
-  text: {
-    color: colors.gray[100],
-    fontSize: 16,
-    paddingTop: 10,
   },
   logoutButton: {
     marginTop: 32,
