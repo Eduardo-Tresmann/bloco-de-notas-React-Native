@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { colors } from '@/styles/colors';
 import { getNote, saveNote } from '../../utils/notes-storage';
@@ -16,6 +17,7 @@ export default function NoteDetail() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
+  const scaleAnim = React.useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     (async () => {
@@ -45,6 +47,23 @@ export default function NoteDetail() {
     }, 1500);
   };
 
+  const handleBackPressIn = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 0.96,
+      useNativeDriver: true,
+      speed: 50,
+      bounciness: 10,
+    }).start();
+  };
+  const handleBackPressOut = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+      speed: 50,
+      bounciness: 10,
+    }).start();
+  };
+
   if (loading) {
     return null;
   }
@@ -52,7 +71,18 @@ export default function NoteDetail() {
   return (
     <>
       <PageContainer style={styles.container} scrollable>
-        <Header>Editar Nota</Header>
+        <Animated.View style={styles.headerRow}>
+          <TouchableOpacity
+            style={styles.backButton}
+            activeOpacity={0.8}
+            onPress={() => router.push('../tabs/notes')}
+            onPressIn={handleBackPressIn}
+            onPressOut={handleBackPressOut}
+          >
+            <Ionicons name="arrow-back" size={24} color={colors.white} />
+          </TouchableOpacity>
+          <Header style={styles.headerTitleCentered}>Editar Nota</Header>
+        </Animated.View>
         <InputField
           placeholder="Título"
           value={title}
@@ -65,14 +95,15 @@ export default function NoteDetail() {
           onChangeText={setContent}
           multiline
           style={styles.contentInput}
-        />
-        <Button
-          title="Salvar Nota"
-          color={colors.blue[400]}
-          style={styles.saveButton}
-          onPress={handleSave}
+          scrollEnabled={true}
         />
       </PageContainer>
+      <Button
+        title="Salvar Nota"
+        color={colors.blue[400]}
+        style={[styles.saveButton, styles.saveButtonBottom]}
+        onPress={handleSave}
+      />
       <ModalMessage
         visible={showModal}
         icon="checkmark-circle-outline"
@@ -89,31 +120,56 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    backgroundColor: colors.gray[900],
-    padding: 20,
+    backgroundColor: colors.gray[800],
+    padding: 10,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 18,
+    marginTop: 4,
+    position: 'relative',
+    justifyContent: 'center',
+  },
+  backButton: {
+    backgroundColor: 'transparent',
+    paddingVertical: 8,
+    paddingHorizontal: 18,
+    borderRadius: 4,
+    marginRight: 12,
+    position: 'absolute',
+    left: 0,
+    zIndex: 2,
+  },
+  headerTitleCentered: {
+    flex: 1,
+    marginBottom: 0,
+    textAlign: 'center',
+    fontSize: 26,
   },
   titleInput: {
     fontSize: 22,
     fontWeight: '700',
     color: colors.white,
-    backgroundColor: colors.gray[700],
+    backgroundColor: colors.gray[800],
     borderRadius: 10,
     paddingVertical: 14,
     paddingHorizontal: 16,
-    marginBottom: 18,
+    marginBottom: -4,
     borderWidth: 0,
   },
   contentInput: {
     minHeight: 120,
     fontSize: 16,
     color: colors.white,
-    backgroundColor: colors.gray[600],
+    backgroundColor: colors.gray[800],
     borderRadius: 10,
-    paddingVertical: 14,
+    paddingVertical: 2,
     paddingHorizontal: 16,
     marginBottom: 24,
     borderWidth: 0,
     textAlignVertical: 'top',
+    lineHeight: 22,
   },
   saveButton: {
     backgroundColor: colors.blue[400],
@@ -124,6 +180,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.10,
     shadowRadius: 4,
     elevation: 2,
+  },
+  saveButtonBottom: {
+    margin: 20,
+    marginTop: 0,
+    paddingHorizontal: 16,
   },
 });
 

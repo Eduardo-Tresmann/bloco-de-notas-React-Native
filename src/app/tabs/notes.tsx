@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { StyleSheet, RefreshControl, Animated, ScrollView, Text } from 'react-native';
 import { Link } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { colors } from '@/styles/colors';
 import { getNotes, Note, removeNote } from '@/utils/notes-storage';
@@ -64,7 +65,9 @@ export default function NotesPage() {
       style={{ backgroundColor: colors.gray[800], paddingHorizontal: 16, padding: 20, paddingBottom: 20 }}
       scrollable={false}
     >
-      <Header>📝 Minhas Notas</Header>
+      <Header>
+        <Ionicons name="document-text-outline" size={28} color={colors.white} style={{ marginRight: 8, marginBottom: -4 }} /> Minhas Notas
+      </Header>
       <Link href="../notes/new" asChild>
         <Button
           title="+ Criar Nova Nota"
@@ -162,40 +165,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
-  },
-  noteCard: {
-    backgroundColor: colors.gray[600],
-    borderRadius: 12,
-    padding: 18,
-    marginBottom: 16,
-    shadowColor: colors.black,
-    shadowOpacity: 0.04,
-    shadowRadius: 2,
-    elevation: 1,
-    position: 'relative',
-    justifyContent: 'center',
-  },
-  trashButton: {
-    position: 'absolute',
-    right: 8,
-    top: '50%',
-    marginTop: 0,
-    padding: 6,
-    borderRadius: 8,
-    zIndex: 2,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  noteTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: colors.white,
-    marginBottom: 6,
-  },
-  notePreview: {
-    fontSize: 14,
-    color: colors.gray[300],
   },
   modalOverlay: {
     flex: 1,

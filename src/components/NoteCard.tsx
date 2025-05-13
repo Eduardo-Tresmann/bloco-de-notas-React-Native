@@ -14,6 +14,8 @@ interface NoteCardProps {
 
 const NoteCard: React.FC<NoteCardProps> = ({ title, content, onPress, onDelete, deleting, animValue }) => (
   <TouchableOpacity style={styles.noteCard} onPress={onPress} activeOpacity={0.85}>
+    <Text style={styles.noteTitle} numberOfLines={1}>{title}</Text>
+    <Text style={styles.notePreview} numberOfLines={2}>{content}</Text>
     <TouchableOpacity
       style={styles.trashButton}
       onPress={e => {
@@ -31,14 +33,12 @@ const NoteCard: React.FC<NoteCardProps> = ({ title, content, onPress, onDelete, 
         />
       </Animated.View>
     </TouchableOpacity>
-    <Text style={styles.noteTitle}>{title}</Text>
-    <Text style={styles.notePreview} numberOfLines={2}>{content}</Text>
   </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
   noteCard: {
-    backgroundColor: colors.gray[600],
+    backgroundColor: colors.gray[700],
     borderRadius: 12,
     padding: 18,
     marginBottom: 16,
@@ -47,18 +47,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 1,
     position: 'relative',
-    justifyContent: 'center',
-  },
-  trashButton: {
-    position: 'absolute',
-    right: 8,
-    top: '50%',
-    marginTop: 0,
-    padding: 6,
-    borderRadius: 8,
-    zIndex: 2,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
+    minHeight: 70,
     justifyContent: 'center',
   },
   noteTitle: {
@@ -66,10 +55,25 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.white,
     marginBottom: 6,
+    paddingRight: 30,
+    flexShrink: 1,
   },
   notePreview: {
     fontSize: 14,
     color: colors.gray[300],
+    paddingRight: 30,
+    flexShrink: 1,
+  },
+  trashButton: {
+    position: 'absolute',
+    right: 12,
+    top: '50%',
+    padding: 6,
+    borderRadius: 8,
+    zIndex: 2,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
