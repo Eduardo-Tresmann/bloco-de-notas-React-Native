@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { StyleSheet, RefreshControl, Animated, ScrollView, Text } from 'react-native';
 import { Link } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { colors } from '@/styles/colors';
 import { getNotes, Note, removeNote } from '@/utils/notes-storage';
@@ -65,9 +64,7 @@ export default function NotesPage() {
       style={{ backgroundColor: colors.gray[800], paddingHorizontal: 16, padding: 20, paddingBottom: 20 }}
       scrollable={false}
     >
-      <Header>
-        <Ionicons name="document-text-outline" size={28} color={colors.white} style={{ marginRight: 8, marginBottom: -4 }} /> Minhas Notas
-      </Header>
+      <Header> Minhas Notas </Header>
       <Link href="../notes/new" asChild>
         <Button
           title="+ Criar Nova Nota"
