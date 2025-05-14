@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Platform, KeyboardAvoidingView, ScrollView, ViewProps } from 'react-native';
-import { colors } from '@/styles/colors';
+import { colors } from '@/constants/colors';
 
 interface PageContainerProps extends ViewProps {
   children: React.ReactNode;

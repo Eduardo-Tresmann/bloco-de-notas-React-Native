@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, TextProps } from 'react-native';
-import { colors } from '@/styles/colors';
+import { colors } from '@/constants/colors';
 
 interface HeaderProps extends TextProps {
   children: React.ReactNode;

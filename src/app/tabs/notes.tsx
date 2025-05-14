@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { StyleSheet, RefreshControl, Animated, ScrollView, Text } from 'react-native';
 import { Link } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
-import { colors } from '@/styles/colors';
+import { colors } from '@/constants/colors';
 import { getNotes, Note, removeNote } from '@/utils/notes-storage';
 import Button from '@/components/Button';
 import PageContainer from '@/components/PageContainer';

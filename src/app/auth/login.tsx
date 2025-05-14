@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
-import { colors } from '@/styles/colors';
+import { router } from 'expo-router';
+import { colors } from '@/constants/colors';
 import Button from '@/components/Button';
 import InputField from '@/components/InputField';
 import PageContainer from '@/components/PageContainer';
 import AuthSwitchLink from '@/components/AuthSwitchLink';
 import Header from '@/components/Header';
 
-export default function LoginScreen() {
-  const [username, setUsername] = useState('');
+export default function Signin() {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
-  function handleLogin() {
+  function handleSignIn() {
     router.replace('/tabs/notes');
   }
 
@@ -22,10 +22,9 @@ export default function LoginScreen() {
       <Header>Login</Header>
       <InputField
         style={styles.input}
-        placeholder="Usuário"
-        value={username}
-        onChangeText={setUsername}
-        autoCapitalize="none"
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
       />
       <InputField
         style={styles.input}
@@ -37,8 +36,7 @@ export default function LoginScreen() {
       <Button
         title="Entrar"
         color={colors.blue[400]}
-        style={styles.button}
-        onPress={handleLogin}
+        onPress={handleSignIn}
       />
       <AuthSwitchLink onPress={() => router.push('/auth/register')}>
         Não tem conta? Registre-se
@@ -64,12 +62,5 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 16,
     fontSize: 16,
-  },
-  button: {
-    backgroundColor: colors.blue[400],
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    marginBottom: 16,
   },
 });

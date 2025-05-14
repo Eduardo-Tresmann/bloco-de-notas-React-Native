@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { colors } from '@/styles/colors';
+import { colors } from '@/constants/colors';
 import { getNote, saveNote } from '../../utils/notes-storage';
 import Button from '@/components/Button';
 import InputField from '@/components/InputField';

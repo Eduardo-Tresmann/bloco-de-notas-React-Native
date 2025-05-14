@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
-import { colors } from '@/styles/colors';
+import { colors } from '@/constants/colors';
 import Button from '@/components/Button';
 import PageContainer from '@/components/PageContainer';
 import Header from '@/components/Header';

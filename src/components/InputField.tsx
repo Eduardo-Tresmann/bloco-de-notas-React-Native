@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput, StyleSheet, TextInputProps } from 'react-native';
-import { colors } from '@/styles/colors';
+import { colors } from '@/constants/colors';
 
 interface InputFieldProps extends TextInputProps {
   style?: any;

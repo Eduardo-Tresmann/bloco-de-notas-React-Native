@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
-import { colors } from '@/styles/colors';
+import { router, useRouter } from 'expo-router';
+import { colors } from '@/constants/colors';
 import Button from '@/components/Button';
 import InputField from '@/components/InputField';
 import PageContainer from '@/components/PageContainer';
 import AuthSwitchLink from '@/components/AuthSwitchLink';
 import Header from '@/components/Header';
 
-export default function RegisterScreen() {
-  const [username, setUsername] = useState('');
+export default function Signin() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
-  function handleRegister() {
-    router.replace('/auth/login');
+  function handleSignUp() {
+    console.log(
+      name,
+      email,
+      password
+    )
   }
 
   return (
@@ -23,10 +27,15 @@ export default function RegisterScreen() {
       <Header>Registrar</Header>
       <InputField
         style={styles.input}
-        placeholder="Usuário"
-        value={username}
-        onChangeText={setUsername}
-        autoCapitalize="none"
+        placeholder="Nome"
+        value={name}
+        onChangeText={setName}
+      />
+      <InputField
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
       />
       <InputField
         style={styles.input}
@@ -35,18 +44,10 @@ export default function RegisterScreen() {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <InputField
-        style={styles.input}
-        placeholder="Confirmar Senha"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        secureTextEntry
-      />
       <Button
         title="Registrar"
         color={colors.blue[400]}
-        style={styles.button}
-        onPress={handleRegister}
+        onPress={handleSignUp}
       />
       <AuthSwitchLink onPress={() => router.replace('/auth/login')}>
         Já tem conta? Faça login
@@ -72,12 +73,5 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 16,
     fontSize: 16,
-  },
-  button: {
-    backgroundColor: colors.blue[400],
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    marginBottom: 16,
   },
 });

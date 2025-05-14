@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Animated, Pressable, Text, StyleSheet, GestureResponderEvent } from 'react-native';
-import { colors } from '@/styles/colors';
+import { colors } from '@/constants/colors';
 
 interface AuthSwitchLinkProps {
   onPress: (event: GestureResponderEvent) => void;

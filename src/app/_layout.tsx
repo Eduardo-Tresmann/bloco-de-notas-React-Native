@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Slot } from 'expo-router';
-import { colors } from '../styles/colors';
+import { colors } from '../constants/colors';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
