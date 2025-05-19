@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { router } from 'expo-router';
+import { router} from 'expo-router';
 import { colors } from '@/constants/colors';
 import Button from '@/components/Button';
 import InputField from '@/components/InputField';
@@ -8,18 +8,29 @@ import PageContainer from '@/components/PageContainer';
 import AuthSwitchLink from '@/components/AuthSwitchLink';
 import Header from '@/components/Header';
 
-export default function Signin() {
+export default function Signup() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  function handleSignIn() {
-    router.replace('/tabs/notes');
+  function handleSignUp() {
+    console.log(
+      name,
+      email,
+      password
+    )
   }
 
   return (
     <PageContainer style={styles.container}>
-      <Header>Login</Header>
+      <Header>Registrar</Header>
+      <InputField
+        style={styles.input}
+        placeholder="Nome"
+        value={name}
+        onChangeText={setName}
+      />
       <InputField
         style={styles.input}
         placeholder="Email"
@@ -34,12 +45,12 @@ export default function Signin() {
         secureTextEntry
       />
       <Button
-        title="Entrar"
+        title="Registrar"
         color={colors.blue[400]}
-        onPress={handleSignIn}
+        onPress={handleSignUp}
       />
-      <AuthSwitchLink onPress={() => router.push('/auth/register')}>
-        Não tem conta? Registre-se
+      <AuthSwitchLink onPress={() => router.replace('/auth/singin')}>
+        Já tem conta? Faça login
       </AuthSwitchLink>
     </PageContainer>
   );

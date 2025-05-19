@@ -1,3 +1,3 @@
-import LoginScreen from './auth/login';
+import LoginScreen from './auth/singin';
 
 export default LoginScreen;

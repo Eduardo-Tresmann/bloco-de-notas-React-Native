@@ -17,7 +17,7 @@ export default function Settings() {
   const [modal, setModal] = useState<{visible: boolean, icon: string, iconColor: string, title: string, message: string}>({visible: false, icon: '', iconColor: '', title: '', message: ''});
 
   function handleLogout() {
-    router.replace('/auth/login');
+    router.replace('/auth/singin');
   }
 
   function showModal(type: 'success' | 'empty' | 'mismatch') {
