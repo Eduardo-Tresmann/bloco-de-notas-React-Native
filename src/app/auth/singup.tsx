@@ -13,12 +13,29 @@ import ModalMessage from '@/components/ModalMessage';
 export default function singup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState({visible: false, icon: '', iconColor: '', title: '', message: ''});
 
-  function showModal(type: 'success' | 'network' | 'email' | 'password' | 'exists') {
+  function showModal(type: 'success' | 'network' | 'email' | 'password' | 'exists' | 'mismatch' | 'empty') {
     let modalConfig;
-    if (type === 'email') {
+    if (type === 'empty') {
+      modalConfig = {
+        visible: true,
+        icon: 'alert-circle-outline',
+        iconColor: colors.yellow[400],
+        title: 'Campos obrigatórios',
+        message: 'Preencha todos os campos para registrar.'
+      };
+    } else if (type === 'mismatch') {
+      modalConfig = {
+        visible: true,
+        icon: 'close-circle-outline',
+        iconColor: colors.red[400],
+        title: 'Senhas diferentes',
+        message: 'A confirmação de senha não coincide.'
+      };
+    } else if (type === 'email') {
       modalConfig = {
         visible: true,
         icon: 'alert-circle-outline',
@@ -64,6 +81,14 @@ export default function singup() {
   }
 
   async function handleSignUp() {
+    if (!email || !password || !confirmPassword) {
+      showModal('empty');
+      return;
+    }
+    if (password !== confirmPassword) {
+      showModal('mismatch');
+      return;
+    }
     setLoading(true);
     try {
       const response = await fetch(`${supaUrl}/auth/v1/signup`, {
@@ -122,6 +147,13 @@ export default function singup() {
           placeholder="Senha"
           value={password}
           onChangeText={setPassword}
+          secureTextEntry
+        />
+        <InputField
+          style={styles.input}
+          placeholder="Confirmar senha"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
           secureTextEntry
         />
         <Button
