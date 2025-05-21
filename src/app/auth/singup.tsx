@@ -104,7 +104,6 @@ export default function singup() {
       });
       const data = await response.json();
       if (!response.ok) {
-        // Supabase error codes: https://supabase.com/docs/reference/javascript/auth-signup#errors
         if (data.msg && data.msg.includes('password')) {
           showModal('password');
         } else if (data.msg && data.msg.includes('email')) {
