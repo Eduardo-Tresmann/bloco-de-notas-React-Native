@@ -11,8 +11,7 @@ import { supaAnonKey, supaUrl } from '@/constants/supabase';
 
 export default function Settings() {
   const router = useRouter();
-
-  const [modal, setModal] = useState<{visible: boolean, icon: string, iconColor: string, title: string, message: string}>({visible: false, icon: '', iconColor: '', title: '', message: ''});
+  const [modal, setModal] = useState({visible: false, icon: '', iconColor: '', title: '', message: ''});
 
   function handleLogout() {
     router.replace('/auth/singin');

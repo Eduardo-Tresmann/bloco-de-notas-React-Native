@@ -9,6 +9,7 @@ import PageContainer from '@/components/PageContainer';
 import AuthSwitchLink from '@/components/AuthSwitchLink';
 import Header from '@/components/Header';
 import ModalMessage from '@/components/ModalMessage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Signin() {
   const [email, setEmail] = useState('');
@@ -63,6 +64,7 @@ export default function Signin() {
         setLoading(false);
         return;
       }
+      await AsyncStorage.setItem('@supabase.auth.token', JSON.stringify(data));
       showModal('success');
       setLoading(false);
       setTimeout(() => router.replace('/tabs/notes'), 2000);

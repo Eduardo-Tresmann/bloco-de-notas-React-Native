@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { useRouter } from 'expo-router';
 import { colors } from '@/constants/colors';
-import { saveNote } from '../../utils/notes-storage';
+import { saveNote } from '@/utils/notes-storage';
 import Button from '@/components/Button';
 import InputField from '@/components/InputField';
 import PageContainer from '@/components/PageContainer';
@@ -10,14 +10,12 @@ import ModalMessage from '@/components/ModalMessage';
 import Header from '@/components/Header';
 import { Ionicons } from '@expo/vector-icons';
 
-function uuid() {
-  return Math.random().toString(36).substring(2, 12) + Date.now().toString(36);
-}
-
-export default function NewNote() {
+export default function NewNotePage() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const router = useRouter();
   const scaleAnim = React.useRef(new Animated.Value(1)).current;
 
@@ -29,6 +27,7 @@ export default function NewNote() {
       bounciness: 10,
     }).start();
   };
+
   const handleBackPressOut = () => {
     Animated.spring(scaleAnim, {
       toValue: 1,
@@ -40,18 +39,20 @@ export default function NewNote() {
 
   const handleSave = async () => {
     if (!title.trim() && !content.trim()) return;
-    const note = {
-      id: uuid(),
-      title: title.trim() || 'Sem título',
-      content: content.trim(),
-      createdAt: Date.now(),
-    };
-    await saveNote(note);
-    setShowModal(true);
-    setTimeout(() => {
-      setShowModal(false);
-      router.push('../tabs/notes');
-    }, 1500);
+    setSaving(true);
+    try {
+      await saveNote({ title, content });
+      setErrorMsg('');
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+        router.replace('/tabs/notes');
+      }, 1500);
+    } catch (e) {
+      setErrorMsg('Erro ao salvar nota. Tente novamente.');
+      setShowModal(true);
+    }
+    setSaving(false);
   };
 
   return (
@@ -87,16 +88,20 @@ export default function NewNote() {
       <Button
         title="Salvar Nota"
         color={colors.blue[400]}
-        style={[styles.saveButton, styles.saveButtonBottom]}
+        style={[styles.saveButton, saving && { opacity: 0.6 }]}
         onPress={handleSave}
+        disabled={saving}
       />
       <ModalMessage
         visible={showModal}
-        icon="checkmark-circle-outline"
-        iconColor={colors.green[400]}
-        title="Nota salva!"
-        message="Sua nota foi salva com sucesso."
-        onRequestClose={() => setShowModal(false)}
+        icon={errorMsg ? 'alert-circle-outline' : 'checkmark-circle-outline'}
+        iconColor={errorMsg ? colors.red[400] : colors.green[400]}
+        title={errorMsg ? 'Erro' : 'Nota salva!'}
+        message={errorMsg ? errorMsg : 'Sua nota foi salva com sucesso.'}
+        onRequestClose={() => {
+          setShowModal(false);
+          setErrorMsg('');
+        }}
       />
     </>
   );
@@ -141,7 +146,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 14,
     paddingHorizontal: 16,
-    marginBottom: 2, 
+    marginBottom: 2,
     borderWidth: 0,
   },
   contentInput: {
@@ -173,4 +178,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
 });
-

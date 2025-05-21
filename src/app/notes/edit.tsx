@@ -3,48 +3,56 @@ import { StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { colors } from '@/constants/colors';
-import { getNote, saveNote } from '../../utils/notes-storage';
+import { getNote, updateNote } from '@/utils/notes-storage';
 import Button from '@/components/Button';
 import InputField from '@/components/InputField';
 import PageContainer from '@/components/PageContainer';
 import ModalMessage from '@/components/ModalMessage';
 import Header from '@/components/Header';
 
-export default function NoteDetail() {
+export default function EditNotePage() {
   const { id } = useLocalSearchParams();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [notFound, setNotFound] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const router = useRouter();
   const scaleAnim = React.useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    (async () => {
-      if (typeof id === 'string') {
-        const note = await getNote(id);
+    if (id && typeof id === 'string') {
+      getNote(id).then(note => {
         if (note) {
           setTitle(note.title);
           setContent(note.content);
+          setNotFound(false);
+        } else {
+          setNotFound(true);
         }
-      }
+        setLoading(false);
+      });
+    } else {
+      setNotFound(true);
       setLoading(false);
-    })();
+    }
   }, [id]);
 
   const handleSave = async () => {
-    if (!id || typeof id !== 'string') return;
-    await saveNote({
-      id,
-      title: title.trim() || 'Sem título',
-      content: content.trim(),
-      createdAt: Date.now(),
-    });
-    setShowModal(true);
-    setTimeout(() => {
-      setShowModal(false);
-      router.push('../tabs/notes');
-    }, 1500);
+    if (!title.trim() && !content.trim()) return;
+    setSaving(true);
+    try {
+      if (id && typeof id === 'string') {
+        await updateNote(id, { title, content });
+      }
+      router.replace('/tabs/notes');
+    } catch (e) {
+      setErrorMsg('Erro ao salvar nota. Tente novamente.');
+      setShowModal(true);
+    }
+    setSaving(false);
   };
 
   const handleBackPressIn = () => {
@@ -66,6 +74,14 @@ export default function NoteDetail() {
 
   if (loading) {
     return null;
+  }
+  if (notFound) {
+    return (
+      <PageContainer style={styles.container} scrollable>
+        <Header style={styles.headerTitleCentered}>Nota não encontrada</Header>
+        <Button title="Voltar" color={colors.blue[400]} onPress={() => router.replace('/tabs/notes')} />
+      </PageContainer>
+    );
   }
 
   return (
@@ -101,16 +117,17 @@ export default function NoteDetail() {
       <Button
         title="Salvar Nota"
         color={colors.blue[400]}
-        style={[styles.saveButton, styles.saveButtonBottom]}
+        style={[styles.saveButton, saving && { opacity: 0.6 }]}
         onPress={handleSave}
+        disabled={saving}
       />
       <ModalMessage
         visible={showModal}
-        icon="checkmark-circle-outline"
-        iconColor={colors.green[400]}
-        title="Nota salva!"
-        message="Sua nota foi salva com sucesso."
-        onRequestClose={() => setShowModal(false)}
+        icon={errorMsg ? 'alert-circle-outline' : 'checkmark-circle-outline'}
+        iconColor={errorMsg ? colors.red[400] : colors.green[400]}
+        title={errorMsg ? 'Erro' : 'Nota salva!'}
+        message={errorMsg ? errorMsg : 'Sua nota foi salva com sucesso.'}
+        onRequestClose={() => { setShowModal(false); setErrorMsg(''); }}
       />
     </>
   );

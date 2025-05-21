@@ -3,7 +3,7 @@ import { StyleSheet, RefreshControl, Animated, ScrollView, Text } from 'react-na
 import { Link } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
 import { colors } from '@/constants/colors';
-import { getNotes, Note, removeNote } from '@/utils/notes-storage';
+import { getNotes, removeNote } from '@/utils/notes-storage';
 import Button from '@/components/Button';
 import PageContainer from '@/components/PageContainer';
 import NoteCard from '@/components/NoteCard';
@@ -11,7 +11,7 @@ import ModalMessage from '@/components/ModalMessage';
 import Header from '@/components/Header';
 
 export default function NotesPage() {
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<any[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [iconAnim] = useState<{ [id: string]: Animated.Value }>({});
@@ -20,7 +20,12 @@ export default function NotesPage() {
 
   const loadNotes = async () => {
     setRefreshing(true);
-    setNotes(await getNotes());
+    try {
+      const notesFromDb = await getNotes();
+      setNotes(notesFromDb);
+    } catch (e) {
+      setNotes([]);
+    }
     setRefreshing(false);
   };
 
