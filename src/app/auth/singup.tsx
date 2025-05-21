@@ -17,6 +17,10 @@ export default function singup() {
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState({visible: false, icon: '', iconColor: '', title: '', message: ''});
 
+  function isValidEmail(email: string) {
+    return /^[a-zA-Z0-9._%+-]+@(?:gmail\.com|outlook\.com|hotmail\.com|yahoo\.com|icloud\.com|live\.com|bol\.com\.br|uol\.com\.br|terra\.com\.br)$/i.test(email);
+  }
+
   function showModal(type: 'success' | 'network' | 'email' | 'password' | 'exists' | 'mismatch' | 'empty') {
     let modalConfig;
     if (type === 'empty') {
@@ -85,6 +89,10 @@ export default function singup() {
       showModal('empty');
       return;
     }
+    if (!isValidEmail(email)) {
+      showModal('email');
+      return;
+    }
     if (password !== confirmPassword) {
       showModal('mismatch');
       return;
@@ -104,16 +112,18 @@ export default function singup() {
       });
       const data = await response.json();
       if (!response.ok) {
-        if (data.msg && data.msg.includes('password')) {
+        if (
+          (data.error_description && data.error_description.toLowerCase().includes('password')) ||
+          (data.msg && data.msg.toLowerCase().includes('password'))
+        ) {
           showModal('password');
-        } else if (data.msg && data.msg.includes('email')) {
+        } else if (
+          (data.error_description && data.error_description.toLowerCase().includes('email')) ||
+          (data.msg && data.msg.toLowerCase().includes('email'))
+        ) {
           showModal('email');
         } else if (data.error && data.error === 'User already registered') {
           showModal('exists');
-        } else if (data.error_description && data.error_description.toLowerCase().includes('email')) {
-          showModal('email');
-        } else if (data.error_description && data.error_description.toLowerCase().includes('password')) {
-          showModal('password');
         } else if (data.msg && data.msg.toLowerCase().includes('already registered')) {
           showModal('exists');
         } else {
