@@ -9,6 +9,7 @@ import InputField from '@/components/InputField';
 import PageContainer from '@/components/PageContainer';
 import ModalMessage from '@/components/ModalMessage';
 import Header from '@/components/Header';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function EditNotePage() {
   const { id } = useLocalSearchParams();
@@ -21,6 +22,7 @@ export default function EditNotePage() {
   const [errorMsg, setErrorMsg] = useState('');
   const router = useRouter();
   const scaleAnim = React.useRef(new Animated.Value(1)).current;
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     if (id && typeof id === 'string') {
@@ -117,7 +119,11 @@ export default function EditNotePage() {
       <Button
         title="Salvar Nota"
         color={colors.blue[400]}
-        style={[styles.saveButton, saving && { opacity: 0.6 }]}
+        style={[
+          styles.saveButton,
+          saving && { opacity: 0.6 },
+          { marginBottom: 20 + insets.bottom }
+        ]}
         onPress={handleSave}
         disabled={saving}
       />
@@ -197,6 +203,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.10,
     shadowRadius: 4,
     elevation: 2,
+    margin: 20,
   },
   saveButtonBottom: {
     margin: 20,

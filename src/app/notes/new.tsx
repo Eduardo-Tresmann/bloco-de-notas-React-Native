@@ -9,6 +9,7 @@ import PageContainer from '@/components/PageContainer';
 import ModalMessage from '@/components/ModalMessage';
 import Header from '@/components/Header';
 import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function NewNotePage() {
   const [title, setTitle] = useState('');
@@ -18,6 +19,7 @@ export default function NewNotePage() {
   const [errorMsg, setErrorMsg] = useState('');
   const router = useRouter();
   const scaleAnim = React.useRef(new Animated.Value(1)).current;
+  const insets = useSafeAreaInsets();
 
   const handleBackPressIn = () => {
     Animated.spring(scaleAnim, {
@@ -88,7 +90,11 @@ export default function NewNotePage() {
       <Button
         title="Salvar Nota"
         color={colors.blue[400]}
-        style={[styles.saveButton, saving && { opacity: 0.6 }]}
+        style={[
+          styles.saveButton,
+          saving && { opacity: 0.6 },
+          { marginBottom: 20 + insets.bottom }
+        ]}
         onPress={handleSave}
         disabled={saving}
       />
@@ -171,6 +177,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.10,
     shadowRadius: 4,
     elevation: 2,
+    margin: 20,
   },
   saveButtonBottom: {
     margin: 20,
