@@ -10,6 +10,7 @@ import AuthSwitchLink from '@/components/AuthSwitchLink';
 import Header from '@/components/Header';
 import ModalMessage from '@/components/ModalMessage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import PasswordField from '@/components/PasswordField';
 
 export default function singup() {
   const [email, setEmail] = useState('');
@@ -155,19 +156,19 @@ export default function singup() {
           value={email}
           onChangeText={setEmail}
         />
-        <InputField
-          style={styles.input}
-          placeholder="Senha"
+        <PasswordField
           value={password}
           onChangeText={setPassword}
-          secureTextEntry
-        />
-        <InputField
+          placeholder="Senha"
           style={styles.input}
-          placeholder="Confirmar senha"
+          containerStyle={{ maxWidth: 320, width: '100%' }}
+        />
+        <PasswordField
           value={confirmPassword}
           onChangeText={setConfirmPassword}
-          secureTextEntry
+          placeholder="Confirmar senha"
+          style={styles.input}
+          containerStyle={{ maxWidth: 320, width: '100%' }}
         />
         <Button
           title="Registrar"

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Alert } from 'react-native';
+import { StyleSheet, Alert, View } from 'react-native';
 import { router } from 'expo-router';
 import { colors } from '@/constants/colors';
 import { supaAnonKey, supaUrl } from '@/constants/supabase';
@@ -10,12 +10,14 @@ import AuthSwitchLink from '@/components/AuthSwitchLink';
 import Header from '@/components/Header';
 import ModalMessage from '@/components/ModalMessage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import PasswordField from '@/components/PasswordField';
 
 export default function Signin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState({visible: false, icon: '', iconColor: '', title: '', message: ''});
+  const [showPassword, setShowPassword] = useState(false);
 
   function showModal(type: 'success' | 'invalid') {
     let modalConfig;
@@ -87,12 +89,12 @@ export default function Signin() {
           value={email}
           onChangeText={setEmail}
         />
-        <InputField
-          style={styles.input}
-          placeholder="Senha"
+        <PasswordField
           value={password}
           onChangeText={setPassword}
-          secureTextEntry
+          placeholder="Senha"
+          style={styles.input}
+          containerStyle={{ maxWidth: 320, width: '100%' }}
         />
         <Button
           title="Entrar"

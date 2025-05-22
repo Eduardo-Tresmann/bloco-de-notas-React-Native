@@ -7,7 +7,7 @@ import { supaAnonKey } from '@/constants/supabase';
 import Button from '@/components/Button';
 import PageContainer from '@/components/PageContainer';
 import Header from '@/components/Header';
-import InputField from '@/components/InputField';
+import PasswordField from '@/components/PasswordField';
 import ModalMessage from '@/components/ModalMessage';
 
 function parseJwt(token: string) {
@@ -200,25 +200,22 @@ export default function Settings() {
             </View>
           </View>
         )}
-        <InputField
+        <PasswordField
           placeholder="Senha atual"
           value={currentPassword}
           onChangeText={setCurrentPassword}
-          secureTextEntry
           style={styles.input}
         />
-        <InputField
+        <PasswordField
           placeholder="Nova senha"
           value={newPassword}
           onChangeText={setNewPassword}
-          secureTextEntry
           style={styles.input}
         />
-        <InputField
+        <PasswordField
           placeholder="Confirmar nova senha"
           value={confirmPassword}
           onChangeText={setConfirmPassword}
-          secureTextEntry
           style={styles.input}
         />
         <Button
