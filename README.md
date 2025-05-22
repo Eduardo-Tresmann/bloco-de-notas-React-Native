@@ -1,6 +1,6 @@
 # Bloco de Notas React Native
 
-Projeto acadêmico desenvolvido para criar um bloco de notas mobile utilizando React Native, Expo e Supabase.
+Projeto acadêmico desenvolvido de um aplicativo mobile de bloco de notas utilizando React Native, Expo e Supabase.
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -49,10 +49,6 @@ Projeto acadêmico desenvolvido para criar um bloco de notas mobile utilizando R
 ### 1. Pré-requisitos
 - Node.js instalado (recomendado versão LTS)
 - npm ou yarn
-- Expo CLI (global):
-  ```bash
-  npm install -g expo-cli
-  ```
 - Emulador Android/iOS ou dispositivo físico com o app Expo Go
 
 ### 2. Clonando o repositório
