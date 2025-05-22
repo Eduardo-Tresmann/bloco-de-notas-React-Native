@@ -9,9 +9,6 @@ Projeto acadêmico desenvolvido para criar um bloco de notas mobile utilizando R
 - TypeScript
 - AsyncStorage
 - Expo Router
-- React Native Safe Area Context
-- @expo/vector-icons
-- Jest (testes)
 - Supabase (backend e banco de dados)
 
 ## 👥 Participantes
@@ -26,8 +23,7 @@ Projeto acadêmico desenvolvido para criar um bloco de notas mobile utilizando R
 ## 🗄️ Configuração do Banco de Dados (Supabase)
 
 1. Crie uma conta gratuita em [supabase.com](https://supabase.com/) e crie um novo projeto.
-2. No painel do projeto, copie a `Project URL` e a `anon public key` (Settings > API).
-3. Crie a tabela `notes` executando o SQL abaixo no editor do Supabase:
+2. Crie a tabela `notes` executando o SQL abaixo no editor do Supabase:
    ```sql
    create table notes (
      id uuid primary key default uuid_generate_v4(),
@@ -37,7 +33,8 @@ Projeto acadêmico desenvolvido para criar um bloco de notas mobile utilizando R
      created_at timestamp with time zone default now()
    );
    ```
-4. Habilite Row Level Security (RLS) e adicione políticas para permitir que cada usuário acesse apenas suas próprias notas.
+3. Habilite Row Level Security (RLS) e adicione políticas para permitir que cada usuário acesse apenas suas próprias notas.
+4. No painel do projeto, copie a `Project URL` e a `anon public key` (Settings > API).
 5. No projeto, crie ou edite o arquivo `src/constants/supabase.ts` e adicione:
    ```ts
    export const supaUrl = 'SUA_SUPABASE_URL';
