@@ -65,6 +65,9 @@ export default function Signin() {
         return;
       }
       await AsyncStorage.setItem('@supabase.auth.token', JSON.stringify(data));
+      if (data.access_token) {
+        await AsyncStorage.setItem('sb-access-token', data.access_token);
+      }
       showModal('success');
       setLoading(false);
       setTimeout(() => router.replace('/tabs/notes'), 2000);

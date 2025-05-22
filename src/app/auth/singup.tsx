@@ -9,6 +9,7 @@ import PageContainer from '@/components/PageContainer';
 import AuthSwitchLink from '@/components/AuthSwitchLink';
 import Header from '@/components/Header';
 import ModalMessage from '@/components/ModalMessage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function singup() {
   const [email, setEmail] = useState('');
@@ -134,6 +135,9 @@ export default function singup() {
       }
       showModal('success');
       setLoading(false);
+      if (data.access_token) {
+        await AsyncStorage.setItem('sb-access-token', data.access_token);
+      }
       setTimeout(() => router.replace('/auth/singin'), 2000);
     } catch (error) {
       showModal('network');
