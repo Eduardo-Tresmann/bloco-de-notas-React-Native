@@ -63,6 +63,8 @@ const styles = StyleSheet.create({
     color: colors.gray[300],
     paddingRight: 30,
     flexShrink: 1,
+    height: 40,
+    overflow: 'hidden',
   },
   trashButton: {
     position: 'absolute',
