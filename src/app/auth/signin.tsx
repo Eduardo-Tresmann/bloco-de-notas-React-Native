@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Alert, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 import { colors } from '@/constants/colors';
 import { supaAnonKey, supaUrl } from '@/constants/supabase';
@@ -12,7 +12,7 @@ import ModalMessage from '@/components/ModalMessage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PasswordField from '@/components/PasswordField';
 
-export default function Signin() {
+export default function signin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -101,7 +101,7 @@ export default function Signin() {
           color={colors.blue[400]}
           onPress={handleSignIn}
         />
-        <AuthSwitchLink onPress={() => router.push('/auth/singup')}>
+        <AuthSwitchLink onPress={() => router.push('/auth/signup')}>
           Não tem conta? Registre-se
         </AuthSwitchLink>
       </PageContainer>

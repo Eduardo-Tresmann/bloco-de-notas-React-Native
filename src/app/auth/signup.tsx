@@ -12,7 +12,7 @@ import ModalMessage from '@/components/ModalMessage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PasswordField from '@/components/PasswordField';
 
-export default function singup() {
+export default function signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -139,7 +139,7 @@ export default function singup() {
       if (data.access_token) {
         await AsyncStorage.setItem('sb-access-token', data.access_token);
       }
-      setTimeout(() => router.replace('/auth/singin'), 2000);
+      setTimeout(() => router.replace('/auth/signin'), 2000);
     } catch (error) {
       showModal('network');
       setLoading(false);
@@ -175,7 +175,7 @@ export default function singup() {
           color={colors.blue[400]}
           onPress={handleSignUp}
         />
-        <AuthSwitchLink onPress={() => router.replace('/auth/singin')}>
+        <AuthSwitchLink onPress={() => router.replace('/auth/signin')}>
           Já tem conta? Faça login
         </AuthSwitchLink>
       </PageContainer>

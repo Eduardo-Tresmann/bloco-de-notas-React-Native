@@ -53,7 +53,7 @@ export default function Settings() {
   }, []);
 
   function handleLogout() {
-    router.replace('/auth/singin');
+    router.replace('/auth/signin');
   }
 
   function showModal(type: 'success' | 'empty' | 'mismatch') {
